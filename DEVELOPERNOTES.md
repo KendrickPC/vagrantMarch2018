@@ -8,4 +8,4 @@
 	http://localhost:5000/login
 	http://localhost:5000/gconnect
 
-3. 
+3. Save the client_secrets.json file into the root directory of the project folder. 
