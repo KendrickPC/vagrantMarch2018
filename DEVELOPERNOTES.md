@@ -1,4 +1,4 @@
-<!-- March 15th, 2018 -->
+##March 15th, 2018
 
 1. Get a Google Client ID for Web application from Google CLoud Platform API Services tab, then register for OAUTH 2.0 client IDs'Credentials'. 
 
@@ -9,3 +9,7 @@
 	http://localhost:5000/gconnect
 
 3. Save the client_secrets.json file into the root directory of the project folder. 
+
+4. Facebook Login OAuth2.0 Problem still lerking. 
+
+5. 
