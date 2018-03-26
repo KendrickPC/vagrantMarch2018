@@ -25,13 +25,13 @@ DBSession = sessionmaker(bind=engine)
 # session.rollback()
 session = DBSession()
 
-# Create dummy user
+# Bart Simpson as First User
 user1 = User(name="Bart Simpson", email="BartSimpson@gmail.com",
              picture='http://freevectorlogo.net/bart-simpson/34856')
 session.add(user1)
 session.commit()
 
-# Items for Strings
+# Hair Salons for Xinyi District
 category1 = Category(name="Xinyi District", user_id=1)
 
 session.add(category1)
@@ -52,7 +52,7 @@ item3 = CategoryItem(name="Xinyi Hair Salon #3", user_id=1, description="Xinyi D
 session.add(item3)
 session.commit()
 
-# Items for Woodwinds
+# Hair Salons for Zhongshan District
 category2 = Category(name="Zhongshan District", user_id=1)
 
 session.add(category2)
@@ -73,7 +73,7 @@ item3 = CategoryItem(name="Zhongshan Hair Salon #3", user_id=1, description="Zho
 session.add(item3)
 session.commit()
 
-# Items for Percussion
+# Hair Salons for Songshan District
 category3 = Category(name="Songshan District", user_id=1)
 
 session.add(category3)
@@ -94,8 +94,8 @@ item3 = CategoryItem(name="Songshan Hair Salon #3", user_id=1, description="Song
 session.add(item3)
 session.commit()
 
-# Items for Brass
-category4 = Category(name="Da'an", user_id=1)
+# Hair Salons for Da'an District
+category4 = Category(name="Da'an District", user_id=1)
 
 session.add(category4)
 session.commit()
