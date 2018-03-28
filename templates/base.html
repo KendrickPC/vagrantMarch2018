@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta content="IE=edge" http-equiv="X-UA-Compatible">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	<title>Taipei Hair Salon Catalog</title>
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Alegreya:300,300italic,700,700italic" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet">
+	<link href="/static/css/milligram.css" rel="stylesheet">
+	<link href="/static/css/style.css" rel="stylesheet">
+	<link href="favicon.png" rel="shortcut icon" type="image/x-icon">
+</head>
+<body>
+	<div class="wrapper">
+		<header class="header">
+			<div class="container">
+				<a class="header__title" href="/">
+				<h1 class="title__text">台北美髮沙龍</h1></a>
+				<div class="header__user">
+					{%if 'username' not in session %} <a class="user__nav" href="{{url_for('login')}}">登錄</a> {% else %} <a class="user__nav" href="{{url_for('logout')}}">登出</a> {% endif %}
+				</div>
+			</div>
+		</header>
+		<div class="content">
+			<div class="container">
+				{% block content %} {% endblock %}
+			</div>
+		</div>
+	</div>
+</body>
+</html>
