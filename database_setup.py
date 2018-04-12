@@ -1,4 +1,3 @@
-import sys
 from sqlalchemy import Column, ForeignKey, Integer, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, backref
@@ -32,8 +31,8 @@ class Category(Base):
             'id'            : self.id
         }
 
-class CategoryItems(Base):
-    __tablename__ = 'category_items'
+class Items(Base):
+    __tablename__ = 'items'
 
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
@@ -56,5 +55,7 @@ class CategoryItems(Base):
             'category'      : self.category.name
         }
 
-engine = create_engine('sqlite:///catalog.db')
+
+engine = create_engine('sqlite:///taipeihairsalons.db')
+
 Base.metadata.create_all(engine)
