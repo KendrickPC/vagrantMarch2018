@@ -1,4 +1,11 @@
-from flask import Flask, render_template, url_for, request, redirect, flash, jsonify, make_response
+from flask import (Flask, 
+                   render_template, 
+                   url_for, 
+                   request, 
+                   redirect, 
+                   flash, 
+                   jsonify, 
+                   make_response)
 from flask import session as login_session
 from sqlalchemy import create_engine, asc, desc
 from sqlalchemy.orm import sessionmaker, relationship
@@ -24,15 +31,6 @@ Base.metadata.bind = engine
 # Create session
 DBSession = sessionmaker(bind = engine)
 session = DBSession()
-
-
-def login_required(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if 'username' not in login_session:
-            return redirect('/login')
-        return f(*args, **kwargs)
-    return decorated_function
 
 # Facebook Connect
 @app.route('/fbconnect', methods=['POST'])
@@ -187,6 +185,8 @@ def gconnect():
     user_id = getUserID(login_session['email'])
     if not user_id:
         user_id = createUser(login_session)
+    # saving the user state to the database for maintaining
+    # and authentication.
     login_session['user_id'] = user_id
 
     output = ''
@@ -195,7 +195,11 @@ def gconnect():
     output += '!</h1>'
     output += '<img src="'
     output += login_session['picture']
-    output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
+    output += ' " style = "width: 300px;' \
+              'height: 300px;' \
+              'border-radius: 150px;' \
+              '-webkit-border-radius: 150px;' \
+              '-moz-border-radius: 150px;">' 
     flash("you are now logged in as %s" % login_session['username'])
     return output
 
@@ -241,6 +245,9 @@ def disconnect():
             gdisconnect()
             del login_session['gplus_id']
             del login_session['access_token']
+            del login_session['username']
+            del login_session['email']
+            del login_session['picture']
         if login_session['provider'] == 'facebook':
             fbdisconnect()
             del login_session['facebook_id']
@@ -252,8 +259,8 @@ def disconnect():
         flash("You have successfully been logged out.")
         return redirect(url_for('showCatalog'))
     else:
-        flash("You were not logged in")
-        return redirect(url_for('showCatalog'))
+        # return gdisconnect function
+        return redirect(url_for('gdisconnect'))
 # End General Disconnect function
 
 # Login - Create anti-forgery state token
