@@ -14,7 +14,7 @@ computer on mac, therefore, no code can interact with your MAC OSX)
 8. type `cd /vagrant` as instructed in terminal
 9. type `python database_setup.py`
 10. type `python database_init.py`
-10. type `python database login_decorator.py`
+10. type `python login_decorator.py`
 11. type `python app.py`
 
 Open up Google Chrome and select File, `New Incognito Window`
