@@ -1,7 +1,8 @@
 # Taipei Hair Salon Web App
 
 ## About
-This project is a RESTful web application utilizing the Flask framework which accesses a SQL database that populates categories and their items. OAuth2 provides authentication for further CRUD functionality on the application. Currently OAuth2 is implemented for Google Accounts, but not working properly for Facebook Accounts.
+This project is a RESTful web application utilizing the Flask framework which accesses a SQL database that populates categories and their items. OAuth2 provides authentication for further CRUD functionality on the application. 
+
 
 ## In This Repo
 This project has one main Python module `app.py` which runs the Flask application. A SQL database is created using the `database_setup.py` module and you can populate the database with test data using `database_init.py`.
@@ -16,7 +17,7 @@ The Flask application uses stored HTML templates in the templates folder to buil
 
 ## Installation
 There are some dependancies and a few instructions on how to run the application.
-Seperate instructions are provided to get GConnect working also.
+Seperate instructions are provided to get GConnect working.
 
 ## Dependencies
 - [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
