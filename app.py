@@ -55,8 +55,6 @@ def fbconnect():
     data = json.loads(result)
     print "data: ",data
     token = 'access_token=' + data['access_token']
-    # see: https://discussions.udacity.com/t/
-    #   issues-with-facebook-oauth-access-token/233840?source_topic_id=174342
 
     # Use token to get user info from API
     # make API call with new token
