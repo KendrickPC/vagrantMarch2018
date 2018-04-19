@@ -4,7 +4,7 @@
 This project is a RESTful web application utilizing the Flask framework which accesses a SQL database that populates categories and their items. OAuth2 provides authentication for further CRUD functionality on the application. Currently OAuth2 is implemented for Google Accounts, but not working properly for Facebook Accounts.
 
 ## In This Repo
-This project has one main Python module `webserver.py` which runs the Flask application. A SQL database is created using the `database_setup.py` module and you can populate the database with test data using `database_init.py`.
+This project has one main Python module `app.py` which runs the Flask application. A SQL database is created using the `database_setup.py` module and you can populate the database with test data using `database_init.py`.
 The Flask application uses stored HTML templates in the templates folder to build the front-end of the application. CSS/JS/Images are stored in the static directory.
 
 ## Skills Honed
@@ -32,7 +32,7 @@ Seperate instructions are provided to get GConnect working also.
 6. The app imports requests which is not on this vm. Run sudo pip install requests
 7. Setup application database `python database_setup.py`
 8. *Insert fake data `python database_init.py`
-9. Run application using `python app2.py`
+9. Run application using `python app.py`
 10. Access the application locally using http://localhost:5000
 
 Optional step(s)
@@ -69,6 +69,3 @@ Category Items JSON: `/catalog/<path:category_name>/items/JSON`
 
 Category Item JSON: `/catalog/<path:category_name>/<path:item_name>/JSON`
     - Displays a specific category item.
-
-
-http://localhost:5000/login
