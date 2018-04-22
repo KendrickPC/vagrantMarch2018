@@ -12,6 +12,7 @@
 *    09. Section-Catalog
 *    10. Section-ShowItem
 *    11. Section-Items
+*    12. Login Page Styling
 **/
 
 
@@ -534,4 +535,39 @@ h6 {
 .img-center {
   margin-left: auto;
   margin-right: auto;
+}
+
+/*------------------------------------*\
+    12. Login Page Styling
+\*------------------------------------*/
+
+.wrapper .container--login {
+  max-width: 36rem;
+}
+
+.content .container--login {
+  padding: 7.5rem 5rem;
+  margin-top: 10rem;
+  border: .1rem solid #d1d1d1;
+  text-align: center;
+}
+
+.login__separator {
+  font-weight: 700;
+  margin: 20px 0;
+}
+
+.login__button {
+
+}
+
+.login__button--facebook {
+  background: #3B5997;
+  border-color: #3B5997;
+}
+
+.login__button--google {
+  margin-top: 1rem;
+  background: #da4635;
+  border-color: #da4635;
 }

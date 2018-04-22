@@ -7,6 +7,10 @@
 <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
  -->
 
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css">
+<!-- <link rel="stylesheet" href="/static/css/milligram.css"> -->
+
 <script
   src="https://code.jquery.com/jquery-3.3.1.js"
   integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
@@ -111,15 +115,18 @@ function signInCallback(authResult) {
   </script>
   <!-- End FB login script -->
 
-<section id="login" class="section">
-    <div class="container">
+<section id="login" class="content">
+    <div id="login" class="container container--login">
         <div class="row">
-            <div class="col-sm-12">
+<!--             <div class="col-sm-12">
                 <h1>Login</h1>
-            </div>
+            </div> -->
         </div>
         <div class="row padding-top-20">
             <div class="container">
+            <div class="col-sm-12">
+                <h1>Login</h1>
+            </div>
                 <!--gplus signin-->
                 <div id="signInButton">
                   <span class="g-signin"
@@ -133,9 +140,10 @@ function signInCallback(authResult) {
                   </span>
                 </div>
                 <!--/gplus signin-->
+                <div class="login__separator">OR</div>
                 <!-- FB login -->
                 <button>
-                    <fb:login-button scope="public_profile,email" onlogin="sendTokenToServer();">
+                    <fb:login-button size = "large"scope="public_profile,email" onlogin="sendTokenToServer();">
                     <a href='javascript:sendTokenToServer()'>Login with Facebook</a>
                     </fb:login-button>
                 </button>
