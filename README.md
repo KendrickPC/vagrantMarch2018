@@ -5,7 +5,7 @@ This project is a RESTful web application utilizing the Flask framework which ac
 
 
 ## In This Repo
-This project has one main Python module `app.py` which runs the Flask application. A SQL database is created using the `database_setup.py` module and you can populate the database with test data using `database_init.py`.
+This project has one main Python module `__init__.py` which runs the Flask application. A SQL database is created using the `database_setup.py` module and you can populate the database with test data using `database_init.py`.
 The Flask application uses stored HTML templates in the templates folder to build the front-end of the application. CSS/JS/Images are stored in the static directory.
 
 ## Skills Honed
@@ -33,7 +33,7 @@ Seperate instructions are provided to get GConnect working.
 6. The app imports requests which is not on this vm. Run sudo pip install requests
 7. Setup application database `python database_setup.py`
 8. *Insert fake data `python database_init.py`
-9. Run application using `python app.py`
+9. Run application using `python __init__.py`
 10. Access the application locally using http://localhost:5000
 
 Optional step(s)
@@ -54,7 +54,7 @@ To get the Google login working there are a few additional steps:
 11. On the Dev Console Select Download JSON
 12. Rename JSON file to client_secrets.json
 13. Place JSON file in item-catalog directory that you cloned from here
-14. Run application using `python /item-catalog/app.py`
+14. Run application using `python /item-catalog/__init__.py`
 
 ## JSON Endpoints
 The following JSON data is open to the public:
