@@ -1,72 +1,173 @@
-# Taipei Hair Salon Web App
 
-## About
-This project is a RESTful web application utilizing the Flask framework which accesses a SQL database that populates categories and their items. OAuth2 provides authentication for further CRUD functionality on the application. 
+## Amazon Web Services Linux Server Configuration
+
+### Catalog Hosting Name
+
+##### Public IP: 
+##### Static IP: 
+##### Host Name: 
+
+##### SSH Port 5000
+
+# Helpful Links
+
+    Initial Server Setup with Ubuntu 16.04
+    https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-16-04
+
+    How To Deploy a Flask Application on an Ubuntu VPS
+    https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps
+
+------------------------------------------------------
+
+# Amazon Lightsail Setup
+
+[Seoul Server]
+1. Sign up for a Amazon Web Services Lightsail Account
+https://aws.amazon.com/
+2. Sign into AWS Console
+![Create Instance in AWS](readme_images/Create_Instance.png)
+3. Private IP = XXX.XX.XX.XX
+
+   Get the hostname from http://www.hcidata.info/host2ip.cgi
+
+4. Download SSH Keypairs
+![Accounts Page](readme_images/accounts_page.png)
+5. Add TCP Ports
+![Firewall](readme_images/firewall.png)
+6. Now we are finished with the Amazon Lightsail Setup! 
+
+# Linux Server Configuration Part I
+
+1. Show all files in Mac OSX by typing `$ killall Finder` in the terminal. 
+2. Input in terminal `$ defaults write com.apple.finder AppleShowAllFiles TRUE`. 
+3. Locate the hidden .ssh folder in the root of your Mac.
+4. Move the downloaded `.pem` file into your `.ssh` folder.
+![.pem key to .ssh folder](readme_images/ssh.png)
+5. Rename the `.pem` file to `udacity.pem`
+6. To make the public key usable and secure, go back to your terminal and input `$ chmod 600 ~/.ssh/udacity.pem`
+7. Log into Amazon Lightsail Server with `$ ssh -i ~/.ssh/udacity.pem ubuntu@52.192.199.102`
+8. Type `$ sudo su -` to become a root user. 
+9. Type  `$ sudo adduser grader` to create a user 'grader' 
+10. Enter `grader` UNIX password as `udacity`
+
+11. Create a new file under the sudoers directory: `$ sudo nano /etc/sudoers.d/grader`.
+12. Fill that file with `grader ALL=(ALL:ALL) ALL` using nano and save it.
+![sudoers](readme_images/sudoers.png)
+13. In order to prevent the `$ sudo: unable to resolve host error`, edit the hosts by `$ sudo nano /etc/hosts`, and then add `127.0.1.1 ip-10-20-37-65` under `127.0.1.1:localhost`
+14. Run `$ sudo apt-get update`
+15. Run `$ sudo apt-get upgrade`
+16. Run `$ sudo apt-get install finger`
 
 
-## In This Repo
-This project has one main Python module `__init__.py` which runs the Flask application. A SQL database is created using the `database_setup.py` module and you can populate the database with test data using `database_init.py`.
-The Flask application uses stored HTML templates in the templates folder to build the front-end of the application. CSS/JS/Images are stored in the static directory.
+# Linux Server Configuration Part II
+1. Open up a new terminal window. Type `$ ssh-keygen -f ~/.ssh/udacity_key.rsa`
+2. Keep a blank password
+3. In the new terminal window (the one just opened up with instructions above), input `$ cat ~/.ssh/udacity_key.rsa.pub`
+4. Copy the RSA key and save it somewhere private.
 
-## Skills Honed
-1. Python
-2. HTML
-3. CSS
-4. OAuth
-5. Flask Framework
+# Linux Server Configuration Part III
+1. Return to the terminal window that is logged into root. Change directory to `$ cd /home/grader`
+2. Create a .ssh directory: `$ mkdir .ssh`. Check directory with `$ ls -al` You should see a .ssh folder.
+3. Create a file to store the public key with `$ touch .ssh/authorized_keys`
+4. Edit the authorized_keys file `$ nano .ssh/authorized_keys` and paste the RSA key from Part II
+5. Change the permission: `$ sudo chmod 700 /home/grader/.ssh` and `$ sudo chmod 644 /home/grader/.ssh/authorized_keys`
+6. Change the owner from root to grader: `$ sudo chown -R grader:grader /home/grader/.ssh`
+7. Restart the ssh service: `$ sudo service ssh restart`
+8. We now need to enforce the key-based authentication: `$ sudo nano /etc/ssh/sshd_config`. Find the `PasswordAuthentication` line and change text after to `no`. After this, restart ssh again: `$ sudo service ssh restart`
+9. We now need to change the ssh port from 22 to 2200, as required by Udacity: `$ sudo nano /etc/ssh/sshd_config` Find the Port line and change 22 to 2200. Restart ssh: `$ sudo service ssh restart`
+10. Disconnect from the server. Log back through port 2200: `$ ssh -i ~/.ssh/udacity_key.rsa -p 2200 grader@52.192.199.102`
+11. Disable ssh login for root user. `$ sudo nano /etc/ssh/sshd_config`. Find the `PermitRootLogin` line and edit to `no`. Restart `ssh $ sudo service ssh restart`
 
-## Installation
-There are some dependancies and a few instructions on how to run the application.
-Seperate instructions are provided to get GConnect working.
+# Linux Server Configuration Part IV
+1. Log into the server as grader: `$ ssh -i ~/.ssh/udacity_key.rsa grader@52.192.199.102 -p 2200`
+2. Disable ssh login for root user: `$ sudo nano /etc/ssh/sshd_config`. Find the `PermitRootLogin` line and edit to `no`. 
+3. Restart ssh `$ sudo service ssh restart`
+4. Now we need to configure UFW to fulfill the requirement:
 
-## Dependencies
-- [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
-- [Vagrant](https://www.vagrantup.com/)
+* `$ sudo ufw allow 2200/tcp`
+* `$ sudo ufw allow 80/tcp`
+* `$ sudo ufw allow 123/udp`
+* `$ sudo ufw enable`
+5. Exit Terminal and take a break.
 
-## How to Install
-1. Install VirtualBox and Vagrant 
-2. Clone the Vagrantfile
-3. Clone this repo or download and place zip here
-3. Launch the Vagrant VM (`vagrant up`) in terminal folder directory
-4. Log into Vagrant VM (`vagrant ssh`) in terminal folder directory
-5. Navigate to `cd/vagrant` as instructed in terminal
-6. The app imports requests which is not on this vm. Run sudo pip install requests
-7. Setup application database `python database_setup.py`
-8. *Insert fake data `python database_init.py`
-9. Run application using `python __init__.py`
-10. Access the application locally using http://localhost:5000
+# Deploying an Application (be careful on these steps)
+1. SSH into machine using `$ ssh -i ~/.ssh/udacity_key.rsa grader@52.192.199.102 -p 2200`
+2. `$ sudo apt-get install apache2`
+3. `$ sudo apt-get install libapache2-mod-wsgi python-dev`
+4. `$ sudo apt-get install git`
+5. You should see the apache2 ubuntu default page on web address http://52.192.199.102     [PUBLIC IP]
+6. Enable mod_wsgi with the command `$ sudo a2enmod wsgi` and restart Apache using `$ sudo service apache2 restart`
 
-Optional step(s)
+# Creating a directory for the application and make the user `grader` the owner.
+1. `$ cd /var/www`
+2. `$ sudo mkdir catalog`
+3. `$ sudo chown -R grader:grader catalog`
+4. `$ cd catalog`
+5. Clone the project from Github using `$ git clone [your link] catalog`
+6. Create a .wsgi file: `$ sudo nano catalog.wsgi` and add the following into this file:
 
-## Using Google Login
-To get the Google login working there are a few additional steps:
+import sys
+import logging
+logging.basicConfig(stream=sys.stderr)
+sys.path.insert(0, "/var/www/catalog/")
 
-1. Go to [Google Dev Console](https://console.developers.google.com)
-2. Sign up or Login if prompted
-3. Go to Credentials
-4. Select Create Crendentials > OAuth Client ID
-5. Select Web application
-6. Enter name 'Item-Catalog'
-7. Authorized JavaScript origins = 'http://localhost:5000'
-8. Authorized redirect URIs = 'http://localhost:5000/login' && 'http://localhost:5000/gconnect'
-9. Select Create
-10. Copy the Client ID and paste it into the `data-clientid` in login.html
-11. On the Dev Console Select Download JSON
-12. Rename JSON file to client_secrets.json
-13. Place JSON file in item-catalog directory that you cloned from here
-14. Run application using `python /item-catalog/__init__.py`
+from catalog import app as application
+application.secret_key = 'supersecretkey'
 
-## JSON Endpoints
-The following JSON data is open to the public:
+7. Rename your application.py, project.py, or whatever you called it in your catalog application folder to `__init__.py` by `$ mv project.py __init__.py`
 
-Catalog JSON: `/catalog/JSON`
-    - Displays the whole catalog. Categories and all items.
+# Create Our Virtual Environment
+1. Make sure you are in `/var/www/catalog`
+2. `$ sudo apt-get install python-virtualenv`
+3. `$ sudo virtualenv venv`
+4. `$ source venv/bin/activate`
+5. `$ sudo chmod -R 777 venv`
 
-Categories JSON: `/catalog/categories/JSON`
-    - Displays all categories
+This is what your command line should look like: (venv) grader@ip-XXX-XX-X-XXX:/var/www/catalog$ 
 
-Category Items JSON: `/catalog/<path:category_name>/items/JSON`
-    - Displays items for a specific category
+# Virtualenv setup
+1. While our virtual environment is activated we need to install all packages required for our Flask application. Here are some defaults but you may have more to install.
+`$ sudo apt-get install python-pip`
+`$ sudo pip install flask`
+`$ sudo pip install httplib2 oauth2client sqlalchemy psycopg2`
 
-Category Item JSON: `/catalog/<path:category_name>/<path:item_name>/JSON`
-    - Displays a specific category item.
+2. Use the `nano __init__.py` command to change the client_secrets.json line to `/var/www/catalog/catalog/client_secrets.json`
+3. Paste in the following:
+
+```
+<VirtualHost *:80>
+    ServerName 52.192.199.102
+    ServerAlias ec2-52-192-199-102.ap-northeast-1.compute.amazonaws.com
+    ServerAdmin admin@35.167.27.204
+    WSGIDaemonProcess catalog python-path=/var/www/catalog:/var/www/catalog/venv/lib/python2.7/site-packages
+    WSGIProcessGroup catalog
+    WSGIScriptAlias / /var/www/catalog/catalog.wsgi
+    <Directory /var/www/catalog/catalog/>
+        Order allow,deny
+        Allow from all
+    </Directory>
+    Alias /static /var/www/catalog/catalog/static
+    <Directory /var/www/catalog/catalog/static/>
+        Order allow,deny
+        Allow from all
+    </Directory>
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    LogLevel warn
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+```
+
+4. Enable to virtual host: `$ sudo a2ensite catalog.conf` and DISABLE the default host `$ a2dissite 000-default.conf`. Otherwise, your site will not load with the hostname
+
+# Database Setup
+
+1. `$ sudo -u postgres -i`
+2. `$ psql`
+3. `postgres=# CREATE USER catalog WITH PASSWORD catalog;`
+ERROR:  syntax error at or near "catalog"
+
+
+
+Resource Links:
+https://github.com/callforsky/udacity-linux-configuration
+

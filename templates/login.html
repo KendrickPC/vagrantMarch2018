@@ -16,46 +16,7 @@
   integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
   crossorigin="anonymous"></script>
 
-<!-- <script
-  src="https://code.jquery.com/jquery-1.9.1.js"
-  integrity="sha256-e9gNBsAcA0DBuRWbm0oZfbiCyhjLrI6bmqAl5o+ZjUA="
-  crossorigin="anonymous"></script> -->
 
-
-<!--Begin Google login script-->
-<script>
-function signInCallback(authResult) {
-  if (authResult['code']) {
-    //Hide the sign-in button once the user is authorized
-    $('#login').attr('style','display:none');
-    // Send one-time-use code to the server, if server responds,
-    // write a 'login successful' message to the web page and then
-    // redirect back to the main restaurants page
-    $.ajax({
-      type: 'POST',
-      url: '/gconnect?state={{STATE}}',
-      processData: false,
-      data: authResult['code'],
-      contentType: 'application/octet-stream; charset=utf-8',
-      success: function(result) {
-        // Handle or verify the server response if necessary.
-        if (result) {
-          $('#result').html('Login Successful!</br>'+ result + '</br>Redirecting...');
-          setTimeout(function() {
-            window.location.href = "/catalog";
-          }, 4000);
-        } else if (authResult['error']) {
-          console.log('There was an error: ' + authResult['error']);
-        } else {
-          $('#result').html('Failed to make a server-side call. Check your configuration and console.');
-        }
-      },
-      error: function(result) {
-        console.log('There was an error: ' + result);
-      }
-  }); } }
-  </script>
-  <!--End Google login script-->
   <!--FACEBOOK SIGN IN -->
   <script>
     var access_token = '';
@@ -118,29 +79,13 @@ function signInCallback(authResult) {
 <section id="login" class="content">
     <div id="login" class="container container--login">
         <div class="row">
-<!--             <div class="col-sm-12">
-                <h1>Login</h1>
-            </div> -->
+
         </div>
         <div class="row padding-top-20">
             <div class="container">
             <div class="col-sm-12">
                 <h1>Login</h1>
             </div>
-                <!--gplus signin-->
-                <div id="signInButton">
-                  <span class="g-signin"
-                    data-scope="openid email"
-                    data-clientid="376642414498-h8hu1ecssn07k0p773ncb21d5t5vdep7.apps.googleusercontent.com"
-                    data-redirecturi="postmessage"
-                    data-accesstype="offline"
-                    data-cookiepolicy="single_host_origin"
-                    data-callback="signInCallback"
-                    data-approvalprompt="force">
-                  </span>
-                </div>
-                <!--/gplus signin-->
-                <div class="login__separator">OR</div>
                 <!-- FB login -->
                 <button>
                     <fb:login-button size = "large"scope="public_profile,email" onlogin="sendTokenToServer();">
